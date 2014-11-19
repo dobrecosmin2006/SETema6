@@ -4,12 +4,13 @@ import mta.se.lab.mvc.interfaces.IController;
 import mta.se.lab.mvc.interfaces.IModelListener;
 import mta.se.lab.mvc.interfaces.IView;
 import mta.se.lab.mvc.model.CalcModel;
-import mta.se.lab.mvc.utils.CalculateAction;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+
+//import mta.se.lab.mvc.utils.CalculateAction;
 
 public class CalcView extends JFrame implements IModelListener, IView {
 
@@ -56,14 +57,6 @@ public class CalcView extends JFrame implements IModelListener, IView {
 
             public void warn()
             {
-                String newValue = mGrade.getText();
-
-                if (mMultiplyBtn.getAction() == null)
-                {
-                    mMultiplyBtn.setAction(new CalculateAction());
-                }
-
-
 
             }
         });
