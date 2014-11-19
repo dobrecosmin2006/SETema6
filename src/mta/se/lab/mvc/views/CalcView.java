@@ -16,8 +16,8 @@ public class CalcView extends JFrame implements IModelListener, IView {
     private static final long serialVersionUID = -5758555454500685115L;
 
     // View Components
-    private JTextField mGrade = new JTextField(4);
-    private JTextField mVitezaVantului = new JTextField(4);
+    private JTextField mGrade = new JTextField(24);
+    private JTextField mVitezaVantului = new JTextField(24);
 
     private JButton mMultiplyBtn = new JButton("Random Weather Forecast");
 
@@ -38,7 +38,10 @@ public class CalcView extends JFrame implements IModelListener, IView {
 
         mGrade.getDocument().addDocumentListener(new DocumentListener()
         {
-            // TODO - this is a hack, find a better solution to add data to an event
+            /*
+                  some changes
+
+             */
             public void changedUpdate(DocumentEvent e) {
                 warn();
             }
@@ -54,6 +57,7 @@ public class CalcView extends JFrame implements IModelListener, IView {
             public void warn()
             {
                 String newValue = mGrade.getText();
+
                 if (mMultiplyBtn.getAction() == null)
                 {
                     mMultiplyBtn.setAction(new CalculateAction());
@@ -65,15 +69,25 @@ public class CalcView extends JFrame implements IModelListener, IView {
         });
 
         // Layout the components.
-        JPanel content = new JPanel();
 
-        content.setLayout(new FlowLayout());
-        content.add(new JLabel("Vremea locala: "));
+        /* some changes dialog box-ul */
+
+        Box card1 = Box.createVerticalBox();
+        JPanel content = new JPanel(new GridLayout(10, 1));
+        //    JPanel content = new JPanel(new BorderLayout());
+        //  content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+        //content.setLayout(new FlowLayout());
+        content.setBackground(Color.cyan);
+        content.setLayout(new GridLayout(8, 2, 10, 5));
+        content.add(new JLabel("Vremea locala: "), BorderLayout.CENTER);
         content.add(mGrade);
+        content.add(new JLabel("grade Celsius. "));
         content.add(new JLabel("Viteza vantului: "));
         content.add(mVitezaVantului);
+        content.add(new JLabel("km/h."));
 
         //** m clear buton -> generate
+        content.getBaseline(30, 40);
         content.add(mGenerateButon);
 
         // Finalize layout
