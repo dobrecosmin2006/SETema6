@@ -1,6 +1,7 @@
 package mta.se.lab.mvc.controllers;
 
-import mta.se.lab.mvc.exceptions.InputException;
+ import java.util.Random;
+ import mta.se.lab.mvc.exceptions.InputException;
 import mta.se.lab.mvc.interfaces.IController;
 import mta.se.lab.mvc.interfaces.IView;
 import mta.se.lab.mvc.model.CalcModel;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalcController implements IController {
+
+
     // The Controller needs to interact with both the Model and View.
     private CalcModel mModel;
 
@@ -24,28 +27,37 @@ public class CalcController implements IController {
     public CalcController() {
     }
 
+
+    public static int getRandomNumberFrom(int min, int max) {
+
+        Random foo = new Random();
+        int randomNumber = foo.nextInt((max + 1) - min) + min;
+
+        return randomNumber;
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getActionCommand().equals(ACTION_CALCULATE)) {
-            // Make the operation
-            try {
-                JButton source = (JButton) event.getSource();
-                if (source != null && source.getAction() != null && source.getAction().getValue(ACTION_CALCULATE) != null) {
-                    String userInput = source.getAction().getValue(ACTION_CALCULATE).toString();
-                    makeOperation(userInput);
-                } else {
-                    notifyViews(true, "Invalid operation data");
-                }
-            } catch (InputException e) {
-                notifyViews(true, e.getMessage());
-            } catch (ClassCastException ec) {
-                notifyViews(true, ec.getMessage());
-            }
-        } else if (event.getActionCommand().equals(ACTION_RESET)) {
+
+         if (event.getActionCommand().equals(ACTION_GENERATE)) {
             // Reset the model to its default state
             if (mModel != null) {
                 try {
-                    mModel.setValue(CalcModel.INITIAL_VALUE);
+
+                    mModel.setValue(CalcModel.INITIAL_VALUE,CalcModel.INITIAL_VALUE1);
+
+                    int x=0;
+                    int y=+299;
+                    int rand = this.getRandomNumberFrom(x,y);
+                    String string = "" + rand;
+                    int x1=-40;
+                    int y1=69;
+                    int rand1 = this.getRandomNumberFrom(x1,y1);
+                    String string1 = "" + rand1;
+
+                    mModel.setValue(string,string1);
+
                 } catch (InputException e) {
                     notifyViews(true, e.getMessage());
                 }
@@ -89,21 +101,4 @@ public class CalcController implements IController {
         }
     }
 
-    /**
-     * Multiply current total by a number. The operation can be generalized
-     *
-     * @param operand Number (as string) to multiply total by
-     */
-    private void makeOperation(String operand) throws InputException {
-        if (mModel != null) {
-            BigInteger currentValue = new BigInteger(mModel.getValue());
-
-            try {
-                // Update the model
-                mModel.setValue(currentValue.multiply(new BigInteger(operand)).toString());
-            } catch (NumberFormatException e) {
-                throw new InputException(operand, e.getMessage());
-            }
-        }
-    }
 }

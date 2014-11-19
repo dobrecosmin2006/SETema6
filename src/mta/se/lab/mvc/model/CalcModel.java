@@ -9,18 +9,22 @@ import java.util.List;
 
 public class CalcModel {
     // Constants
-    public static final String INITIAL_VALUE = "1";
+    public static final String INITIAL_VALUE = "0";
+    public static final String INITIAL_VALUE1="0";
 
     // Member variable defining state of calculator, the total current value
-    private BigInteger mTotal;
+    private BigInteger VitezaVantului;
+    private BigInteger Grade;
 
     private List<IModelListener> mListeners;
 
     /**
      * Constructor
      */
-    public CalcModel() {
-        mTotal = new BigInteger(INITIAL_VALUE);
+    public CalcModel()
+    {
+        VitezaVantului = new BigInteger(INITIAL_VALUE);
+        Grade = new BigInteger(INITIAL_VALUE);
     }
 
     /**
@@ -28,11 +32,15 @@ public class CalcModel {
      *
      * @param value New value that should be used for the calculator total.
      */
-    public void setValue(String value) throws InputException {
+    public void setValue(String value, String value2 // aici vreau sa mai pun un STRING
+    ) throws InputException {
         try {
-            mTotal = new BigInteger(value);
+            VitezaVantului = new BigInteger(value);
+            Grade          =  new BigInteger(value2);
             notifyListeners();
+
         } catch (NumberFormatException e) {
+
             throw new InputException(value, e.getMessage());
         }
     }
@@ -40,8 +48,11 @@ public class CalcModel {
     /**
      * Return current calculator total.
      */
-    public String getValue() {
-        return mTotal.toString();
+    public String getValueVant() {
+        return VitezaVantului.toString();
+    }
+    public String getValueGrade() {
+        return Grade.toString();
     }
 
     /**

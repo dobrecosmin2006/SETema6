@@ -12,13 +12,16 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class CalcView extends JFrame implements IModelListener, IView {
+
     private static final long serialVersionUID = -5758555454500685115L;
 
     // View Components
-    private JTextField mUserInputTf = new JTextField(6);
-    private JTextField mTotalTf = new JTextField(20);
-    private JButton mMultiplyBtn = new JButton("Multiply");
-    private JButton mClearBtn = new JButton("Clear");
+    private JTextField mGrade = new JTextField(4);
+    private JTextField mVitezaVantului = new JTextField(4);
+
+    private JButton mMultiplyBtn = new JButton("Random Weather Forecast");
+
+    private JButton mGenerateButon = new JButton("Generate ");
 
     private IController mCalcController;
 
@@ -29,8 +32,12 @@ public class CalcView extends JFrame implements IModelListener, IView {
      */
     public CalcView() {
         // Initialize components
-        mTotalTf.setEditable(false);
-        mUserInputTf.getDocument().addDocumentListener(new DocumentListener() {
+
+        mGrade.setEditable(false);
+        mVitezaVantului.setEditable(false);
+
+        mGrade.getDocument().addDocumentListener(new DocumentListener()
+        {
             // TODO - this is a hack, find a better solution to add data to an event
             public void changedUpdate(DocumentEvent e) {
                 warn();
@@ -44,32 +51,36 @@ public class CalcView extends JFrame implements IModelListener, IView {
                 warn();
             }
 
-            public void warn() {
-                String newValue = mUserInputTf.getText();
-                if (mMultiplyBtn.getAction() == null) {
+            public void warn()
+            {
+                String newValue = mGrade.getText();
+                if (mMultiplyBtn.getAction() == null)
+                {
                     mMultiplyBtn.setAction(new CalculateAction());
                 }
-                mMultiplyBtn.getAction().putValue(IController.ACTION_CALCULATE, newValue);
-                mMultiplyBtn.setActionCommand(IController.ACTION_CALCULATE);
-                mMultiplyBtn.setText("Multiply");
+
+
+
             }
         });
 
         // Layout the components.
         JPanel content = new JPanel();
+
         content.setLayout(new FlowLayout());
-        content.add(new JLabel("Input"));
-        content.add(mUserInputTf);
-        content.add(mMultiplyBtn);
-        content.add(new JLabel("Total"));
-        content.add(mTotalTf);
-        content.add(mClearBtn);
+        content.add(new JLabel("Vremea locala: "));
+        content.add(mGrade);
+        content.add(new JLabel("Viteza vantului: "));
+        content.add(mVitezaVantului);
+
+        //** m clear buton -> generate
+        content.add(mGenerateButon);
 
         // Finalize layout
         this.setContentPane(content);
         this.pack();
 
-        this.setTitle("Calculator");
+        this.setTitle("My Weather Forecast");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -80,7 +91,8 @@ public class CalcView extends JFrame implements IModelListener, IView {
      */
     public void addModel(CalcModel model) {
         mModel = model;
-        mTotalTf.setText(model.getValue());
+        mVitezaVantului.setText(model.getValueVant());
+        mGrade.setText(model.getValueGrade());
     }
 
     /**
@@ -89,11 +101,11 @@ public class CalcView extends JFrame implements IModelListener, IView {
      * @param controller The controller (event listener)
      */
     public void addController(IController controller) {
-        mMultiplyBtn.setActionCommand(IController.ACTION_CALCULATE);
-        mMultiplyBtn.addActionListener(controller);
 
-        mClearBtn.setActionCommand(IController.ACTION_RESET);
-        mClearBtn.addActionListener(controller);
+
+
+        mGenerateButon.setActionCommand(IController.ACTION_GENERATE);
+        mGenerateButon.addActionListener(controller);
     }
 
     @Override
@@ -101,12 +113,13 @@ public class CalcView extends JFrame implements IModelListener, IView {
         if (isError) {
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, message, "Calc MVC", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, message, "Weather Forecast MVC", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     @Override
     public void onUpdate() {
-        mTotalTf.setText(mModel.getValue());
+        mVitezaVantului.setText(mModel.getValueVant());
+        mGrade.setText(mModel.getValueGrade());
     }
 }

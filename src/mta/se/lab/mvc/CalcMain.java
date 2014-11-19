@@ -7,7 +7,7 @@ import mta.se.lab.mvc.views.CalcView;
 /**
  * This is the Main class that represents the entry point to our program
  * 
- * @author John
+ * @author Mihai Cosmin Dobre
  *
  */
 public class CalcMain {
