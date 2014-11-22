@@ -1,19 +1,16 @@
 package mta.se.lab.mvc.controllers;
 
- import java.util.Random;
- import mta.se.lab.mvc.exceptions.InputException;
+import mta.se.lab.mvc.exceptions.InputException;
 import mta.se.lab.mvc.interfaces.IController;
 import mta.se.lab.mvc.interfaces.IView;
 import mta.se.lab.mvc.model.CalcModel;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CalcController implements IController {
-
 
     // The Controller needs to interact with both the Model and View.
     private CalcModel mModel;
@@ -28,6 +25,9 @@ public class CalcController implements IController {
     }
 
 
+    /*
+    * This is my method for randomize integers
+     */
     public static int getRandomNumberFrom(int min, int max) {
 
         Random foo = new Random();
@@ -44,18 +44,21 @@ public class CalcController implements IController {
             // Reset the model to its default state
             if (mModel != null) {
                 try {
-
+                    // set the initial values
                     mModel.setValue(CalcModel.INITIAL_VALUE,CalcModel.INITIAL_VALUE1);
 
+                    // get random integers
                     int x=0;
                     int y=+299;
                     int rand = this.getRandomNumberFrom(x,y);
+
+                    // get random integers
                     String string = "" + rand;
                     int x1=-40;
                     int y1=69;
                     int rand1 = this.getRandomNumberFrom(x1,y1);
                     String string1 = "" + rand1;
-
+                    //set new randomize values by this method
                     mModel.setValue(string,string1);
 
                 } catch (InputException e) {

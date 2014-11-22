@@ -35,6 +35,9 @@ public class CalcModel {
     public void setValue(String value, String value2 // aici vreau sa mai pun un STRING
     ) throws InputException {
         try {
+
+            // new initializations for my domains -> speed wind and grades
+
             VitezaVantului = new BigInteger(value);
             Grade          =  new BigInteger(value2);
             notifyListeners();
@@ -46,11 +49,12 @@ public class CalcModel {
     }
 
     /**
-     * Return current calculator total.
+     *   Return speed wind values and grades values
      */
     public String getValueVant() {
         return VitezaVantului.toString();
     }
+
     public String getValueGrade() {
         return Grade.toString();
     }
